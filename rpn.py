@@ -16,7 +16,10 @@ def calculate(arg):
             value = int(token)
             stack.append(value)
         except ValueError:
-            function = operators[token]
+            try:
+                function = operator.__dict__[token]
+            except KeyError:
+                function = operators[token]
             arg2 = stack.pop()
             arg1 = stack.pop()
             result = function(arg1, arg2)
@@ -24,6 +27,8 @@ def calculate(arg):
 
     if len(stack) != 1:
         raise TypeError('malformed input')
+
+    print(stack[0])
 
     return stack.pop()    
 
